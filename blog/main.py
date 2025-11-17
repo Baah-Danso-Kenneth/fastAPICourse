@@ -1,7 +1,6 @@
-from multiprocessing.sharedctypes import synchronized
-
+from typing import List
 from fastapi import FastAPI, Depends, status, Response, HTTPException
-from .schemas import Blog
+from .schemas import Blog, ShowBlog
 from . import models
 from .database import engine, SessionLocal
 from sqlalchemy.orm import Session
@@ -29,7 +28,7 @@ def create(request: Blog, db: Session = Depends(get_db)):
     return new_blog
 
 
-@app.get('/get_blogs')
+@app.get('/get_blogs', response_model=List[ShowBlog])
 def all_blogs(db: Session = Depends(get_db)):
     blogs = db.query(models.Blog).all()
     return blogs
@@ -49,7 +48,7 @@ def delete_blog(id, db: Session = Depends(get_db)):
 
     return blog
 
-@app.get('/blog/{id}', status_code=200)
+@app.get('/blog/{id}', status_code=200, response_model=ShowBlog)
 def show_specific_blog(id,  db: Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
     if not blog:
