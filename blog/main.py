@@ -4,7 +4,7 @@ from .schemas import Blog, ShowBlog, User
 from . import models
 from .database import engine, SessionLocal
 from sqlalchemy.orm import Session
-
+from .hashing import Hash
 app = FastAPI()
 
 models.Base.metadata.create_all(engine)
@@ -74,7 +74,7 @@ def update_blog(id, request: Blog, db: Session = Depends(get_db)):
 
 @app.post('/user')
 def create_user(request: User, db: Session = Depends(get_db)):
-    new_user = models.User(name=request.name, email=request.email, password=request.password)
+    new_user = models.User(name=request.name, email=request.email, password=Hash.bcrypt(request.password))
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
