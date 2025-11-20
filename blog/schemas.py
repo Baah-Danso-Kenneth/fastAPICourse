@@ -30,7 +30,7 @@ class ShowUser(BaseModel):
 class ShowBlog(BaseModel):
     title: str
     body: str
-    creator: ShowUser
+    creator: ShowUser | None = None
 
     class Config:
         orm_mode = True
