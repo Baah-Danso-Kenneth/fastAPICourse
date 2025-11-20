@@ -19,7 +19,7 @@ class Hash():
         return hashed_bytes.decode('utf-8')
 
     @staticmethod
-    def verify(plain_password: str, hashed_password: str) -> bool:
+    def verify(hashed_password: str, plain_password: str) -> bool:
         # Convert both to bytes
         plain_bytes = plain_password.encode('utf-8')
         if len(plain_bytes) > 72:
