@@ -7,6 +7,10 @@ class Blog(BaseModel):
     title: str
     body: str
 
+class BlogUpdate(BaseModel):
+    title: str
+    body: str
+
 
 class User(BaseModel):
     name: str
@@ -56,4 +60,4 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: Optional[str] = None
+    email: Optional[str] = None

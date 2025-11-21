@@ -1,5 +1,5 @@
 # IDE settings
-.idea/
+../.idea/
 .vscode/
 
 # Python cache and compiled files
