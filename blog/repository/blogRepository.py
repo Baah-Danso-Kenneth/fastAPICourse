@@ -37,14 +37,16 @@ def show(id: int, db: Session):
     return blog
 
 
-def update(id: int, db: Session):
+def update(id: int, request: schemas.BlogUpdate,  db: Session):
     blog_query = db.query(models.Blog).filter(models.Blog.id == id)
+    blog = blog_query.first()
 
-    if not blog_query.first():
+    if not blog:
         raise HTTPException(
             status_code =status.HTTP_404_NOT_FOUND,
             detail=f"Blog with id {id}"
         )
     blog_query.update(request.dict())
     db.commit()
-    return {'message': 'Updated Successfully!!!'}
+    db.refresh(blog)
+    return blog

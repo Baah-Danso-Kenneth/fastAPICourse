@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status, Response, HTTPException
-from .. import schemas,  models, hashing
+from .. import schemas
 from ..database import  get_db
 from sqlalchemy.orm import Session
 from ..repository import userRepository
